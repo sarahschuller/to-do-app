@@ -1,15 +1,15 @@
 let express = require("express");
 let { MongoClient, ObjectId } = require("mongodb");
 let sanitizeHTML = require("sanitize-html");
+let dotenv = require("dotenv");
+dotenv.config();
 
 let app = express();
 let db;
 app.use(express.static("public"));
 
 async function connectToDo() {
-  let client = new MongoClient(
-    "mongodb+srv://sarahschuller91:mXNR9Wk05kP1VAnS@schuller.fnodi.mongodb.net/ToDoApp?retryWrites=true&w=majority&appName=schuller"
-  );
+  let client = new MongoClient(process.env.MONGO_URI);
   await client.connect();
   db = client.db();
   app.listen(3000);
